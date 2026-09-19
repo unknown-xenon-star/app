@@ -890,29 +890,22 @@ Normal operation
 
 Do **not** immediately uninstall.
 
-Instead, start another 24-hour confirmation period:
+1. Enforce a mandatory **10-second reflection delay** (countdown visible in the UI).
+2. After the reflection delay, fire the system uninstall dialog.
+3. The confirmation window stays open for 24 hours. If the user does not confirm within it, the window lapses and the state returns to `None` — a fresh 24-hour cooldown is then required to try again.
 
 ```text
 Uninstall
     ↓
-Start new 24-hour cooldown
+10-second reflection delay
     ↓
-24 hours
-    ↓
-Ask again:
+System uninstall dialog
 
-"Do you still want to uninstall?"
-
-    ├── Keep App
-    │      ↓
-    │   Cancel
-    │
-    └── Uninstall
-           ↓
-        Start another 24h period
+(If the confirmation window lapses instead: state resets to None,
+ and a new 24-hour cooldown is required to attempt uninstall again.)
 ```
 
-This creates a repeated **24-hour reconsideration cycle** until the user chooses to keep the application.
+This bounds the flow: every uninstall attempt is preceded by a full 24-hour cooldown plus a 24-hour decision window, and the window cannot be reused once spent or lapsed.
 
 ## 20.3 State Model & Tamper Resistance
 

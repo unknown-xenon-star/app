@@ -10,6 +10,8 @@ data class UninstallCooldownEntity(
     val deadlineWallMs: Long,
     val startedAtElapsedMs: Long,
     val deadlineElapsedMs: Long,
+    val decisionDeadlineWallMs: Long = 0,
+    val decisionDeadlineElapsedMs: Long = 0,
     val bootId: String,
     val lastObservedWallMs: Long
 )

@@ -51,7 +51,7 @@ Excessive smartphone usage and digital distractions reduce productivity and disr
 
 ### 4. Anti-Cheat, Strict Mode, Anti-Clock Tampering & 24-Hour Uninstall Cooldown
 - **Anti-Clock Tampering & Monotonic Time Protection**: Countdowns and limits use `SystemClock.elapsedRealtime()` (milliseconds since boot including deep sleep). If a user fast-forwards their device date/time in Android Settings, the tampering is detected, and countdowns refuse to expire until true monotonic time has legitimately elapsed.
-- **24-Hour Uninstall Cooldown**: Initiating app removal or disabling protection triggers a persistent 24-hour waiting period. After 24 hours, the user can either cancel or confirm (with a mandatory 10-second reflection delay). If "Uninstall" is chosen, another 24-hour cycle begins to ensure conscious reconsideration.
+- **24-Hour Uninstall Cooldown**: Initiating app removal triggers a persistent 24-hour waiting period. After 24 hours, a 24-hour decision window opens: the user can cancel, or confirm — which runs a mandatory 10-second reflection delay and then fires the system uninstall dialog. If the window lapses, protection resets and a fresh 24-hour cooldown is required to try again.
 - **PIN / Password Protection**: Require a master PIN to alter limits, disable rules, or unlock apps.
 - **Strict Kiosk Focus Mode (Levels 1–3)**: User-started timed focus sessions preventing environment exit via standard overlays (Level 1/2) or native Android Lock Task Mode (Level 3 - Device Owner).
 - **Uninstall Prevention**: Optional Device Administration policy to prevent impulsive uninstallation during active focus sessions.

@@ -9,9 +9,12 @@ class GetUninstallProtectionStateUseCase(
     clock: TimeSource
 ) {
     private val engine = UninstallCooldownEngine(clock)
+
     suspend operator fun invoke(): UninstallProtectionState {
         val record = repository.get()
         val state = engine.state(record)
+        engine.advancedObservation?.let { repository.save(it) }
+        // A lapsed decision window ends the cycle: the user must start a fresh cooldown.
         if (state is UninstallProtectionState.None && record != null) repository.clear()
         return state
     }

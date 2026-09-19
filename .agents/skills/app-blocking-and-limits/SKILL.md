@@ -146,8 +146,9 @@ fun getUninstallCooldownState(
 }
 ```
 
-### Reconsideration Cycle
+### Decision Window
 - If user clicks **"Keep App"**: Reset `requestedAt` and `availableAt` to `null` (return to `UninstallProtectionState.None`).
-- If user clicks **"Uninstall"** after 24h: Do not execute immediate uninstall. Start a new 24-hour cycle (`availableAt = clock.currentTimeMillis() + 24 * 60 * 60 * 1000L`).
-- The confirmation button on the UI must enforce a **10-second reflection countdown** before becoming clickable.
+- If user clicks **"Uninstall"** after 24h: enforce a **10-second reflection countdown**, then fire the system uninstall dialog. The persisted record is cleared and never reused.
+- The confirmation window stays open for **24 hours**; if it lapses without confirmation, return to `UninstallProtectionState.None` — a fresh 24-hour cooldown is required to try again.
+- The confirmation button on the UI must enforce the **10-second reflection countdown** before the uninstall fires.
 
